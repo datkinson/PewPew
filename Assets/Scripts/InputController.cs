@@ -25,6 +25,13 @@ public class InputController : MonoBehaviour
         float yAxis = Input.GetAxis("Vertical");
         float xAxis = Input.GetAxis("Horizontal");
 
+        // reset thrusters
+        mainThruster.enabled = false;
+        reverseThruster.enabled = false;
+        leftRCS.enabled = false;
+        rightRCS.enabled = false;
+
+
         ThrustForward(yAxis);
         Rotate(transform, -xAxis * rotationSpeed);
         mainThruster.enabled = (yAxis > 0);
@@ -33,6 +40,7 @@ public class InputController : MonoBehaviour
         rightRCS.enabled = (xAxis > 0 || (xAxis == 0 && previousXAxis < 0));
         previousXAxis = xAxis;
         previousYAxis = yAxis;
+        if (Input.GetAxis("Brake") > 0) { Brake(); }
     }
 
     private void ClampVelocity()
@@ -50,6 +58,19 @@ public class InputController : MonoBehaviour
 
     private void Rotate(Transform t, float amount)
     {
+        rb.angularVelocity = 0;
         t.Rotate(0, 0, amount);
+    }
+
+    void Brake()
+    {
+        rb.AddForce(-rb.velocity);
+        rb.angularVelocity = rb.angularVelocity - (rb.angularVelocity/ 50);
+        Debug.Log(rb.angularVelocity);
+        mainThruster.enabled = true;
+        reverseThruster.enabled = true;
+        leftRCS.enabled = true;
+        rightRCS.enabled = true;
+        
     }
 }

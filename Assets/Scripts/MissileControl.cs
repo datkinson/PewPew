@@ -8,10 +8,12 @@ public class MissileControl : MonoBehaviour
     private float initialSpeed;
     public float maxSpeedDifference;
     public float force;
+    public float damage;
     private Rigidbody2D missileRigidbody;
     public AnimationCurve forceCurve;
     private float age = 0;
     public GameObject ExplosionPrefab;
+    private int parentID;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,12 +37,21 @@ public class MissileControl : MonoBehaviour
     void HitObject(GameObject hitObject)
     {
         Instantiate(ExplosionPrefab, hitObject.transform.position, hitObject.transform.rotation);
-        Destroy(hitObject);
+        hitObject.GetComponent<DamageManager>().Hit(damage);
+        //Destroy(hitObject);
         Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        HitObject(other.gameObject);
+        if (other.GetInstanceID() != parentID)
+        {
+            HitObject(other.gameObject);
+        }
+    }
+
+    public void SetParentID(int id)
+    {
+        parentID = id;
     }
 }

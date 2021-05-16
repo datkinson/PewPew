@@ -7,12 +7,15 @@ public class EnemyControl : MonoBehaviour
     public float rotationSpeed = 2;
     public float maxVelocity = 1;
     public int frictionFactor = 1;
+    private float timeFired = 0;
+    private const float cooldownTime = 3;
     private Rigidbody2D targetObject;
     private Rigidbody2D enemy;
     private Vector3 targetPoint;
     private Quaternion targetRotation;
     public SpriteRenderer forwardThrusterLeft;
     public SpriteRenderer forwardThrusterRight;
+    public GameObject MissilePrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,7 @@ public class EnemyControl : MonoBehaviour
             targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             ThrustForward(1);
+            Shoot();
         } else
         {
             //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -64,5 +68,18 @@ public class EnemyControl : MonoBehaviour
         enemy.AddForce(-enemy.velocity * frictionFactor);
         forwardThrusterLeft.enabled = false;
         forwardThrusterRight.enabled = false;
+    }
+
+    void Shoot()
+    {
+        if (Time.time - timeFired > cooldownTime)
+        {
+            var spawnedMissile = Instantiate(MissilePrefab, transform.position, transform.rotation);
+            spawnedMissile.GetComponent<MissileControl>().SetParentID(GetComponent<BoxCollider2D>().GetInstanceID());
+            var missileRigidbody = spawnedMissile.GetComponent<Rigidbody2D>();
+            var shipRigidbody = GetComponent<Rigidbody2D>();
+            missileRigidbody.velocity = shipRigidbody.velocity;
+            timeFired = Time.time;
+        }
     }
 }
