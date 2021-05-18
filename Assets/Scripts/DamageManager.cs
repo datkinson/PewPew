@@ -7,6 +7,7 @@ public class DamageManager : MonoBehaviour
     public float hitPoints;
     public float shieldPoints;
     public SpriteRenderer[] shields;
+    public AudioClip[] destroySound;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,8 +33,6 @@ public class DamageManager : MonoBehaviour
 
     public void Hit(float damage)
     {
-        Debug.Log("Current Shields: " + shieldPoints);
-        Debug.Log("Current HP: " + hitPoints);
         if (shieldPoints > 0)
         {
             shieldPoints = shieldPoints - damage;
@@ -49,8 +48,6 @@ public class DamageManager : MonoBehaviour
                 DestroyShip();
             }
         }
-        Debug.Log("Updated Shields: " + shieldPoints);
-        Debug.Log("Updated HP: " + hitPoints);
     }
 
     /*void ShowShieldHit()
@@ -65,7 +62,11 @@ public class DamageManager : MonoBehaviour
 
     void DestroyShip()
     {
-        Debug.Log("Object destroyed through new damage manager");
+        if (destroySound.Length > 0)
+        {
+            int index = Random.Range(0, destroySound.Length);
+            AudioSource.PlayClipAtPoint(destroySound[index], gameObject.transform.position);
+        }
         Destroy(gameObject);
     }
 }

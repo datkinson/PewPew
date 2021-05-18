@@ -353,6 +353,7 @@ MonoBehaviour:
   rotationSpeed: 40
   maxVelocity: 1
   frictionFactor: 1
+  accuracyDeg: 5
   forwardThrusterLeft: {fileID: 5259628883028411022}
   forwardThrusterRight: {fileID: 5259628882788739806}
   MissilePrefab: {fileID: 269172512180291845, guid: bb9c4094bfad42847816cc7055935048, type: 3}
@@ -368,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32881583fea731347af0c10e4de9bc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 20
 --- !u!50 &5259628883030417602
 Rigidbody2D:
   serializedVersion: 4

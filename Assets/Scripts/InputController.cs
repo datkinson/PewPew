@@ -13,11 +13,14 @@ public class InputController : MonoBehaviour
     public float rotationSpeed = 2;
     public float previousYAxis;
     public float previousXAxis;
+    private AudioSource thrusterSound;
+    private bool thrustersActive = false;
 
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        thrusterSound = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -41,6 +44,14 @@ public class InputController : MonoBehaviour
         previousXAxis = xAxis;
         previousYAxis = yAxis;
         if (Input.GetAxis("Brake") > 0) { Brake(); }
+        var thrusterStates = new List<bool>()
+        {
+            mainThruster.enabled,
+            reverseThruster.enabled,
+            leftRCS.enabled,
+            rightRCS.enabled
+        };
+        activeThrusterSound(thrusterStates.Contains(true));
     }
 
     private void ClampVelocity()
@@ -66,11 +77,24 @@ public class InputController : MonoBehaviour
     {
         rb.AddForce(-rb.velocity);
         rb.angularVelocity = rb.angularVelocity - (rb.angularVelocity/ 50);
-        Debug.Log(rb.angularVelocity);
         mainThruster.enabled = true;
         reverseThruster.enabled = true;
         leftRCS.enabled = true;
         rightRCS.enabled = true;
-        
+    }
+
+    void activeThrusterSound(bool thrusterState)
+    {
+        if (thrusterState != thrustersActive)
+        {
+            thrustersActive = thrusterState;
+            if (thrusterState)
+            {
+                thrusterSound.Play(0);
+            } else
+            {
+                thrusterSound.Stop();
+            }
+        }
     }
 }

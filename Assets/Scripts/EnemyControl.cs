@@ -7,6 +7,7 @@ public class EnemyControl : MonoBehaviour
     public float rotationSpeed = 2;
     public float maxVelocity = 1;
     public int frictionFactor = 1;
+    public float accuracyDeg;
     private float timeFired = 0;
     private const float cooldownTime = 3;
     private Rigidbody2D targetObject;
@@ -33,7 +34,11 @@ public class EnemyControl : MonoBehaviour
             targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             ThrustForward(1);
-            Shoot();
+            float angleToTarg = Vector3.Angle(transform.up, targetObject.transform.position - transform.position);
+            if (angleToTarg < 10 && angleToTarg > -10)
+            {
+                Shoot();
+            }
         } else
         {
             //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
