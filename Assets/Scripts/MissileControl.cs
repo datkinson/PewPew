@@ -36,9 +36,11 @@ public class MissileControl : MonoBehaviour
 
     void HitObject(GameObject hitObject)
     {
-        Instantiate(ExplosionPrefab, hitObject.transform.position, hitObject.transform.rotation);
-        hitObject.GetComponent<DamageManager>().Hit(damage);
-        //Destroy(hitObject);
+        if (hitObject)
+        {
+            Instantiate(ExplosionPrefab, hitObject.transform.position, hitObject.transform.rotation);
+            hitObject.GetComponent<DamageManager>().Hit(damage);
+        }
         Destroy(gameObject);
     }
 

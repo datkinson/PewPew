@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GateController : MonoBehaviour
+public class ShipPartsController : MonoBehaviour
 {
     public GameObject player;
-    public Canvas gameCanvas;
+    public float points;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +17,12 @@ public class GateController : MonoBehaviour
     {
         
     }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetInstanceID() == player.GetComponent<BoxCollider2D>().GetInstanceID())
         {
-            gameCanvas.GetComponent<GameCanvasController>().EnterGate(player.GetComponent<InventoryController>().getParts());
+            player.GetComponent<InventoryController>().addParts(points);
         }
+        Destroy(gameObject);
     }
 }

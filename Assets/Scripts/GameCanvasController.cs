@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameCanvasController : MonoBehaviour
 {
     public GameObject gameOverView;
     public GameObject gateView;
     public GameObject player;
+    private string gateText;
     // Start is called before the first frame update
     void Start()
     {
         gameOverView.SetActive(false);
         gateView.SetActive(false);
+        gateText = GameObject.Find("Gate Text").GetComponentInChildren<Text>().text;
     }
 
     // Update is called once per frame
@@ -41,9 +44,10 @@ public class GameCanvasController : MonoBehaviour
         gateView.SetActive(false);
     }
 
-    public void EnterGate()
+    public void EnterGate(float points)
     {
         gateView.SetActive(true);
+        GameObject.Find("Gate Text").GetComponentInChildren<Text>().text = gateText + "\nParts collected: " + points;
         Time.timeScale = 0;
     }
 }
