@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndGameController : MonoBehaviour
+public class GameCanvasController : MonoBehaviour
 {
-    public GameObject view;
+    public GameObject gameOverView;
+    public GameObject gateView;
     public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        view.SetActive(false);
+        gameOverView.SetActive(false);
+        gateView.SetActive(false);
     }
 
     // Update is called once per frame
@@ -18,7 +20,7 @@ public class EndGameController : MonoBehaviour
     {
         if (!player)
         {
-            view.SetActive(true);
+            gameOverView.SetActive(true);
         }
         
     }
@@ -31,5 +33,17 @@ public class EndGameController : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+        gateView.SetActive(false);
+    }
+
+    public void EnterGate()
+    {
+        gateView.SetActive(true);
+        Time.timeScale = 0;
     }
 }
