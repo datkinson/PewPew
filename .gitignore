@@ -139,3 +139,4 @@ Assets/Plugins/Dissonance/Editor/Welcome/.WelcomeState.json
 /Assets/Dissonance/changelog.txt
 /publish-release.ps1
 /do-release-process.ps1
+Logs/
