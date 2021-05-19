@@ -15,11 +15,10 @@ public class GameCanvasController : MonoBehaviour
     {
         gameOverView.SetActive(false);
         gateView.SetActive(false);
-        gateText = GameObject.Find("Gate Text").GetComponentInChildren<Text>().text;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!player)
         {
@@ -47,6 +46,10 @@ public class GameCanvasController : MonoBehaviour
     public void EnterGate(float points)
     {
         gateView.SetActive(true);
+        if (string.IsNullOrEmpty(gateText))
+        {
+            gateText = GameObject.Find("Gate Text").GetComponentInChildren<Text>().text;
+        }
         GameObject.Find("Gate Text").GetComponentInChildren<Text>().text = gateText + "\nParts collected: " + points;
         Time.timeScale = 0;
     }

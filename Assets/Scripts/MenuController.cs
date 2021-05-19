@@ -40,4 +40,9 @@ public class MenuController : MonoBehaviour
         backButton.gameObject.SetActive(false);
         controlsBox.gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat("mudkipz", 5);
+    }
 }

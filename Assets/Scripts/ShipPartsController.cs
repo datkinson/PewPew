@@ -22,7 +22,7 @@ public class ShipPartsController : MonoBehaviour
         if (other.GetInstanceID() == player.GetComponent<BoxCollider2D>().GetInstanceID())
         {
             player.GetComponent<InventoryController>().addParts(points);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

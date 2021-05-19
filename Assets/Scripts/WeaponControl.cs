@@ -7,7 +7,13 @@ public class WeaponControl : MonoBehaviour
     public GameObject MissilePrefab;
     private float timeFired = 0;
     public float cooldownTime = 3;
+    private float mudkipz;
     // Start is called before the first frame update
+    private void OnEnable()
+    {
+        PlayerPrefs.GetFloat("mudkipz");
+        Debug.Log("PlayerPrefs: " + mudkipz);
+    }
     void Start()
     {
         
