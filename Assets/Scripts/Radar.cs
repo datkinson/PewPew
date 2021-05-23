@@ -19,14 +19,17 @@ public class Radar : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        var xDifference = Mathf.Abs(shipRigidbody.position.x - targetRigidbody.position.x);
-        var yDifference = Mathf.Abs(shipRigidbody.position.y - targetRigidbody.position.y);
-        if (xDifference < range && yDifference < range)
+        if (shipRigidbody)
         {
-            GetComponent<EnemyControl>().SetTarget(targetRigidbody);
-        } else
-        {
-            GetComponent<EnemyControl>().UnsetTarget();
+            var xDifference = Mathf.Abs(shipRigidbody.position.x - targetRigidbody.position.x);
+            var yDifference = Mathf.Abs(shipRigidbody.position.y - targetRigidbody.position.y);
+            if (xDifference < range && yDifference < range)
+            {
+                GetComponent<EnemyControl>().SetTarget(targetRigidbody);
+            } else
+            {
+                GetComponent<EnemyControl>().UnsetTarget();
+            }
         }
     }
 }

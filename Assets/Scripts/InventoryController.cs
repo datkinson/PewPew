@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    private float shipParts = 0;
+    public float shipParts = 0;
     // Start is called before the first frame update
     void Start()
     {

@@ -7466,7 +7466,14 @@ MonoBehaviour:
     Space = Fire Missile
 
 
-    Left Control = Brake'
+    C = Deploy Mine
+
+
+    Left
+    Control = Brake
+
+
+    Escape = Pause / Mine Settings'
 --- !u!222 &1895689257
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -396,7 +396,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MissilePrefab: {fileID: 4762953726609957178, guid: 2486eb1a759fd6e48ade8d648fd23397, type: 3}
+  MinePrefab: {fileID: 5818158919829711943, guid: 3a30788b5765b30469899d628e7a4412, type: 3}
   cooldownTime: 1
+  fuseTimer: 0
+  detectionRange: 0
 --- !u!114 &225352880329067531
 MonoBehaviour:
   m_ObjectHideFlags: 0
