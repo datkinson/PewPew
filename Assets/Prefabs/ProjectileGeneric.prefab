@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2958825289945636720}
   m_Layer: 0
   m_Name: ProjectileGeneric
-  m_TagString: Untagged
+  m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   hitPoints: 1
   shieldPoints: 0
   shields: []
+  destroySound: []
 --- !u!82 &2958825289945636720
 AudioSource:
   m_ObjectHideFlags: 0

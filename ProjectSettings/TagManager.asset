@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Parts
+  - Blip
+  - Gate
+  - Shot
   layers:
   - Default
   - TransparentFX
