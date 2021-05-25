@@ -36,13 +36,13 @@ public class InputController : MonoBehaviour
 
 
         ThrustForward(yAxis);
-        Rotate(transform, -xAxis * rotationSpeed);
-        mainThruster.enabled = (yAxis > 0);
-        reverseThruster.enabled = (yAxis < 0);
-        leftRCS.enabled = (xAxis < 0 || (xAxis == 0 && previousXAxis > 0));
-        rightRCS.enabled = (xAxis > 0 || (xAxis == 0 && previousXAxis < 0));
-        previousXAxis = xAxis;
-        previousYAxis = yAxis;
+        Rotate(-xAxis * rotationSpeed);
+        //mainThruster.enabled = (yAxis > 0);
+        //reverseThruster.enabled = (yAxis < 0);
+        //leftRCS.enabled = (xAxis < 0 || (xAxis == 0 && previousXAxis > 0));
+        //rightRCS.enabled = (xAxis > 0 || (xAxis == 0 && previousXAxis < 0));
+        //previousXAxis = xAxis;
+        //previousYAxis = yAxis;
         if (Input.GetAxis("Brake") > 0) { Brake(); }
         var thrusterStates = new List<bool>()
         {
@@ -61,19 +61,25 @@ public class InputController : MonoBehaviour
         rb.velocity = new Vector2(x, y);
     }
 
-    private void ThrustForward(float amount)
+    public void ThrustForward(float amount)
     {
         Vector2 force = transform.up * amount;
         rb.AddForce(force);
+        mainThruster.enabled = (amount > 0);
+        reverseThruster.enabled = (amount < 0);
     }
 
-    private void Rotate(Transform t, float amount)
+    public void Rotate(float amount)
     {
         rb.angularVelocity = 0;
-        t.Rotate(0, 0, amount);
+        transform.Rotate(0, 0, amount);
+        leftRCS.enabled = (amount < 0 || (amount == 0 && previousXAxis > 0));
+        rightRCS.enabled = (amount > 0 || (amount == 0 && previousXAxis < 0));
+        previousXAxis = amount;
+        previousYAxis = amount;
     }
 
-    void Brake()
+    public void Brake()
     {
         rb.AddForce(-rb.velocity);
         rb.angularVelocity = rb.angularVelocity - (rb.angularVelocity/ 50);

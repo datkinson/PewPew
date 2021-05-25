@@ -9,6 +9,8 @@ public class GameCanvasController : MonoBehaviour
     public GameObject gameOverView;
     public GameObject gateView;
     public GameObject mineView;
+    public GameObject pauseView;
+    public GameObject scriptingView;
     public Text shipPartsText;
     public Text healthText;
     public Text shieldsText;
@@ -21,7 +23,9 @@ public class GameCanvasController : MonoBehaviour
     {
         gameOverView.SetActive(false);
         gateView.SetActive(false);
-        mineView.SetActive(true);
+        mineView.SetActive(false);
+        scriptingView.SetActive(false);
+        pauseView.SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -38,7 +42,7 @@ public class GameCanvasController : MonoBehaviour
     {
         if (Input.GetAxis("Cancel") > 0)
         {
-            mineView.SetActive(true);
+            pauseView.SetActive(true);
             Time.timeScale = 0;
         }
 
@@ -47,6 +51,28 @@ public class GameCanvasController : MonoBehaviour
             gameOverView.SetActive(true);
         }
         
+    }
+
+    public void MineSettings()
+    {
+        Time.timeScale = 0;
+        pauseView.SetActive(false);
+        mineView.SetActive(true);
+    }
+
+    public void ScriptingSettings()
+    {
+        Time.timeScale = 0;
+        pauseView.SetActive(false);
+        scriptingView.SetActive(true);
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        pauseView.SetActive(true);
+        scriptingView.SetActive(false);
+        mineView.SetActive(false);
     }
 
     public void Retry()
@@ -64,6 +90,8 @@ public class GameCanvasController : MonoBehaviour
         Time.timeScale = 1;
         gateView.SetActive(false);
         mineView.SetActive(false);
+        scriptingView.SetActive(false);
+        pauseView.SetActive(false);
     }
 
     public void EnterGate(float points)
@@ -75,5 +103,9 @@ public class GameCanvasController : MonoBehaviour
         }
         GameObject.Find("Gate Text").GetComponentInChildren<Text>().text = gateText + "\nParts collected: " + points;
         Time.timeScale = 0;
+        if (PlayerPrefs.GetFloat("highscore") < points)
+        {
+            PlayerPrefs.SetFloat("highscore", points);
+        }
     }
 }

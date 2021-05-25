@@ -8,7 +8,10 @@ public class WeaponControl : MonoBehaviour
     public GameObject MinePrefab;
     private float timeFired = 0;
     public float cooldownTime = 3;
-    
+
+    private float mineTimeFired = 0;
+    public float mineCooldownTime = 1;
+
     public float fuseTimer;
     public float detectionRange;
     private GameObject mine;
@@ -25,17 +28,30 @@ public class WeaponControl : MonoBehaviour
     {
         if (Input.GetAxis("FireMissile") > 0)
         {
-            if (Time.time - timeFired > cooldownTime)
-            {
-                var spawnedMissile = Instantiate(MissilePrefab, transform.position, transform.rotation);
-                spawnedMissile.GetComponent<MissileControl>().SetParentID(GetComponent<BoxCollider2D>().GetInstanceID());
-                var missileRigidbody = spawnedMissile.GetComponent<Rigidbody2D>();
-                var shipRigidbody = GetComponent<Rigidbody2D>();
-                missileRigidbody.velocity = shipRigidbody.velocity;
-                timeFired = Time.time;
-            }
+            FireMissile();
         }
         if (Input.GetButtonDown("Mine"))
+        {
+            DeployMine();
+        }
+    }
+
+    public void FireMissile()
+    {
+        if (Time.time - timeFired > cooldownTime)
+        {
+            var spawnedMissile = Instantiate(MissilePrefab, transform.position, transform.rotation);
+            spawnedMissile.GetComponent<MissileControl>().SetParentID(GetComponent<BoxCollider2D>().GetInstanceID());
+            var missileRigidbody = spawnedMissile.GetComponent<Rigidbody2D>();
+            var shipRigidbody = GetComponent<Rigidbody2D>();
+            missileRigidbody.velocity = shipRigidbody.velocity;
+            timeFired = Time.time;
+        }
+    }
+
+    public void DeployMine()
+    {
+        if (Time.time - mineTimeFired > mineCooldownTime)
         {
             if (mine)
             {
@@ -43,7 +59,8 @@ public class WeaponControl : MonoBehaviour
             }
             else
             {
-                mine = Instantiate(MinePrefab, transform.position, Quaternion.Euler(new Vector3(0,0,0)));
+                mineTimeFired = Time.time;
+                mine = Instantiate(MinePrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                 var shipRigidbody = GetComponent<Rigidbody2D>();
                 var mineRigidbody = mine.GetComponent<Rigidbody2D>();
                 mineRigidbody.velocity = shipRigidbody.velocity;
