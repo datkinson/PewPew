@@ -60,12 +60,14 @@ public class MissileControl : MonoBehaviour
     {
         if (other.GetInstanceID() != parentID)
         {
+            //Debug.Log("Parent ID: " + parentID + "   collided id: " + other.GetInstanceID());
             HitObject(other.gameObject);
         }
     }
 
     public void SetParentID(int id)
     {
+        //Debug.Log("Parent Id set to: " + id);
         parentID = id;
     }
 }

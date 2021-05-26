@@ -10,11 +10,14 @@ public class InputController : MonoBehaviour
     public SpriteRenderer rightRCS;
     public SpriteRenderer reverseThruster;
     public float maxVelocity = 3;
-    public float rotationSpeed = 2;
+    public float rotationSpeed = 3;
+    public float scriptRotationSpeed = 50;
     public float previousYAxis;
     public float previousXAxis;
     private AudioSource thrusterSound;
     private bool thrustersActive = false;
+    private Quaternion targetRotation;
+    private bool autoRotate = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -71,6 +74,7 @@ public class InputController : MonoBehaviour
 
     public void Rotate(float amount)
     {
+        autoRotate = false;
         rb.angularVelocity = 0;
         transform.Rotate(0, 0, amount);
         leftRCS.enabled = (amount < 0 || (amount == 0 && previousXAxis > 0));
@@ -87,6 +91,14 @@ public class InputController : MonoBehaviour
         reverseThruster.enabled = true;
         leftRCS.enabled = true;
         rightRCS.enabled = true;
+    }
+
+    public void RotateTowards(Vector2 coordinates)
+    {
+        autoRotate = true;
+        var angle = Mathf.Atan2(coordinates.y - transform.position.y, coordinates.x - transform.position.x) * Mathf.Rad2Deg - 90;
+        targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, scriptRotationSpeed * Time.deltaTime);
     }
 
     void activeThrusterSound(bool thrusterState)
