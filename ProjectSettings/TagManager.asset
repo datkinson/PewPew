@@ -9,6 +9,9 @@ TagManager:
   - Blip
   - Gate
   - Shot
+  - Radar
+  - Console
+  - ConsoleText
   layers:
   - Default
   - TransparentFX
