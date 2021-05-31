@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TouchControlsKit;
 
 public class WeaponControl : MonoBehaviour
 {
@@ -26,14 +27,15 @@ public class WeaponControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("FireMissile") > 0)
+        if (Input.GetAxis("FireMissile") > 0 || TCKInput.GetButtonDown("Button0"))
         {
             FireMissile();
         }
-        if (Input.GetButtonDown("Mine"))
+        if (Input.GetButtonDown("Mine") || TCKInput.GetButtonDown("Button1"))
         {
             DeployMine();
         }
+        //Debug.Log(TCKInput.GetButtonDown("Button0"));
     }
 
     public void FireMissile()

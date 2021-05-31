@@ -140,3 +140,5 @@ Assets/Plugins/Dissonance/Editor/Welcome/.WelcomeState.json
 /publish-release.ps1
 /do-release-process.ps1
 Logs/
+
+*.keystore

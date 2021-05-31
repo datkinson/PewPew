@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TouchControlsKit;
 
 public class InputController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class InputController : MonoBehaviour
     private bool thrustersActive = false;
     private Quaternion targetRotation;
     private bool autoRotate = false;
+    public GameObject joystick;
 
     // Start is called before the first frame update
     private void Start()
@@ -28,8 +30,13 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        float joystickXAxis = TCKInput.GetAxis("Joystick0", EAxisType.Horizontal);
+        float joystickYAxis = TCKInput.GetAxis("Joystick0", EAxisType.Vertical);
         float yAxis = Input.GetAxis("Vertical");
         float xAxis = Input.GetAxis("Horizontal");
+
+        if (xAxis == 0) { xAxis = joystickXAxis; }
+        if (yAxis == 0) { yAxis = joystickYAxis; }
 
         // reset thrusters
         mainThruster.enabled = false;
